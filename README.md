@@ -80,9 +80,12 @@ This project provides an **AI-powered call analytics system** with authenticatio
   - Quick access to coaching plans and transcripts.
     <img width="1917" height="872" alt="dashboard" src="https://github.com/user-attachments/assets/c20aae24-1c74-4324-addb-2fe6f817be27" />
 
-    ---
-    <img width="1918" height="865" alt="dashboard2" src="https://github.com/user-attachments/assets/0bfdfcca-7a72-4c4f-9839-63e00056b1ba" />
-    ---
+    ***
+
+    ## <img width="1918" height="865" alt="dashboard2" src="https://github.com/user-attachments/assets/0bfdfcca-7a72-4c4f-9839-63e00056b1ba" />
+
+    ***
+
     <img width="1918" height="867" alt="dashboard3" src="https://github.com/user-attachments/assets/7f3619a8-5f48-46bb-9967-56fb92846553" />
 
 ---
@@ -97,10 +100,8 @@ This project provides an **AI-powered call analytics system** with authenticatio
 
 - Transcript is then analyzed by **Gemini or OpenAI models** for call-quality scoring.
   <img width="1918" height="868" alt="upload" src="https://github.com/user-attachments/assets/64b66b00-45f4-4edf-8004-8303daa075dd" />
-  ---
+  ***
   <img width="1915" height="866" alt="uploadinprogress" src="https://github.com/user-attachments/assets/4a47242d-59b5-4d7d-9810-87020bbf12b1" />
-
----
 
 ---
 
