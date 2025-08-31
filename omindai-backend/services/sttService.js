@@ -1,72 +1,61 @@
-const { spawn } = require("child_process");
-const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
 
 async function transcribeAudio(filePath) {
-  // 1️⃣ Check OpenAI key
   const OPENAI_KEY = process.env.OPENAI_API_KEY;
-  console.log(OPENAI_KEY);
 
+  // 1️⃣ Try OpenAI API first
   if (OPENAI_KEY) {
     try {
-      const audioData = fs.createReadStream(filePath);
+      const FormData = require("form-data");
+      const formData = new FormData();
+      formData.append("file", fs.createReadStream(filePath));
 
-      // Call OpenAI transcription API
       const response = await axios.post(
         "https://api.openai.com/v1/audio/transcriptions",
-        audioData,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${OPENAI_KEY}`,
-            "Content-Type": "multipart/form-data",
+            ...formData.getHeaders(),
           },
           maxContentLength: Infinity,
           maxBodyLength: Infinity,
         }
       );
 
-      if (response.data && response.data.text) {
+      if (response.data?.text) {
         return response.data.text;
       }
     } catch (err) {
       console.warn(
-        "OpenAI transcription failed, falling back to local model:",
+        "⚠️ OpenAI transcription failed, falling back to local model:",
         err.message
       );
-      // continue to run in-house model
     }
   }
 
-  // 2️⃣ Fallback to in-house Whisper script
-  return new Promise((resolve, reject) => {
-    const scriptPath = path.join(
-      __dirname,
-      "../../../omindai-whisper/transcribe.py"
+  // 2️⃣ Fallback → send file to local Flask server
+  try {
+    const FormData = require("form-data");
+    const formData = new FormData();
+    formData.append("file", fs.createReadStream(filePath));
+
+    const response = await axios.post(
+      "http://host.docker.internal:8000/transcribe", // Flask running locally
+      formData,
+      { headers: formData.getHeaders() }
     );
 
-    const process = spawn("python3", [scriptPath, filePath]);
-
-    let output = "";
-    let errorOutput = "";
-
-    process.stdout.on("data", (data) => {
-      output += data.toString();
-    });
-
-    process.stderr.on("data", (data) => {
-      errorOutput += data.toString();
-    });
-
-    process.on("close", (code) => {
-      if (code !== 0) {
-        console.error("Whisper script error:", errorOutput);
-        reject(new Error(errorOutput));
-      } else {
-        resolve(output.trim());
-      }
-    });
-  });
+    if (response.data?.text) {
+      return response.data.text;
+    } else {
+      throw new Error("Local Whisper returned no text");
+    }
+  } catch (err) {
+    console.error("❌ Local Whisper error:", err.response?.data || err.message);
+    throw err;
+  }
 }
 
 module.exports = { transcribeAudio };

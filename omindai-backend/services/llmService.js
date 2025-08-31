@@ -11,6 +11,8 @@ const openAI = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
 
+console.log("Initialized models:", { geminiModel, openAI });
+
 async function analyzeCall(transcript) {
   const prompt = `
 You are an automated call-quality evaluator. Analyze the TRANSCRIPT below and return ONLY a VALID JSON object that exactly follows the schema described.

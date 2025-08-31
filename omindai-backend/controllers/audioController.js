@@ -2,9 +2,6 @@ const Audio = require("../models/Audio");
 const Analysis = require("../models/Analysis");
 const { transcribeAudio } = require("../services/sttService");
 const { analyzeCall } = require("../services/llmService");
-const pLimit = require('p-limit').default;
-console.log(pLimit)
-
 
 exports.uploadAndTranscribe = async (req, res) => {
   try {
@@ -15,28 +12,22 @@ exports.uploadAndTranscribe = async (req, res) => {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    // Set concurrency limit to number of CPU cores (or desired level)
-    const concurrencyLimit = 8;
-    const limit = pLimit(concurrencyLimit);
+    // Launch all transcriptions in parallel, no concurrency limit
+    const tasks = req.files.map(async (file) => {
+      const audioDoc = new Audio({
+        filename: file.filename,
+        filepath: file.path,
+        user: req.user.userId,
+      });
+      await audioDoc.save();
 
-    // Map upload files to async transcription jobs with concurrency control
-    const tasks = req.files.map((file) =>
-      limit(async () => {
-        const audioDoc = new Audio({
-          filename: file.filename,
-          filepath: file.path,
-          user: req.user.userId,
-        });
-        await audioDoc.save();
+      const transcript = await transcribeAudio(file.path);
+      audioDoc.transcript = transcript;
+      audioDoc.transcribedAt = new Date();
+      await audioDoc.save();
 
-        const transcript = await transcribeAudio(file.path);
-        audioDoc.transcript = transcript;
-        audioDoc.transcribedAt = new Date();
-        await audioDoc.save();
-
-        return audioDoc;
-      })
-    );
+      return audioDoc;
+    });
 
     // Wait for all to finish; handle individual failures without stopping all
     const results = await Promise.allSettled(tasks);
@@ -45,13 +36,11 @@ exports.uploadAndTranscribe = async (req, res) => {
     const audios = results
       .filter((r) => r.status === "fulfilled")
       .map((r) => r.value);
-
     const errors = results
       .filter((r) => r.status === "rejected")
-      .map((r) => r.reason.message);
+      .map((r) => r.reason ? r.reason.message : "Unknown error");
 
     res.json({ audios, errors });
-
   } catch (error) {
     console.error("Upload/Transcribe Error:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -8,5 +8,28 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  backend:
+    build: ./omindai-backend
+    container_name: omindai-backend
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/omindai
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    volumes:
+      - ../omindai-whisper:/usr/omindai-whisper
+  frontend:
+    build: ./omindai-frontend-client
+    container_name: omindai-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
 volumes:
   mongo-data:
