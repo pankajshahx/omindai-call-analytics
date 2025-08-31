@@ -2,9 +2,9 @@
 
 This project has three main parts:
 
-* **Frontend** → React + Vite (Dockerized)
-* **Backend** → Node + Express + Mongo (Dockerized)
-* **Transcription** → By default uses **OpenAI Whisper API** (requires API key).
+- **Frontend** → React + Vite (Dockerized)
+- **Backend** → Node + Express + Mongo (Dockerized)
+- **Transcription** → By default uses **OpenAI Whisper API** (requires API key).
 
   > (I am personally using a local Whisper server, but it’s not part of this setup.)
 
@@ -12,8 +12,8 @@ This project has three main parts:
 
 ## 1. Prerequisites
 
-* [Docker & Docker Compose](https://docs.docker.com/get-docker/) installed
-* `.env` file (I will email/share it with you separately)
+- [Docker & Docker Compose](https://docs.docker.com/get-docker/) installed
+- `.env` file (I will email/share it with you separately)
 
 ---
 
@@ -39,10 +39,10 @@ This project has three main parts:
 
 ## 3. Access the App
 
-* **Frontend (React/Vite):** [http://localhost:5173](http://localhost:5173)
-* **Backend (Node/Express):** [http://localhost:5000](http://localhost:5000)
-* **MongoDB:** [mongodb://localhost:27017](mongodb://localhost:27017)
-* **Transcription (via OpenAI Whisper API):** Uses your `OPENAI_API_KEY`
+- **Frontend (React/Vite):** [http://localhost:5173](http://localhost:5173)
+- **Backend (Node/Express):** [http://localhost:5000](http://localhost:5000)
+- **MongoDB:** [mongodb://localhost:27017](mongodb://localhost:27017)
+- **Transcription (via OpenAI Whisper API):** Uses your `OPENAI_API_KEY`
 
 ---
 
@@ -51,7 +51,3 @@ This project has three main parts:
 ```bash
 docker-compose down
 ```
-
----
-
-Do you want me to also add a **quick example API call** (like `curl` or Postman snippet) showing how to upload audio for transcription using the backend?
