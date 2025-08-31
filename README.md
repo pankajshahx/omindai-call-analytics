@@ -100,6 +100,17 @@ This project provides an **AI-powered call analytics system** with authenticatio
 
 ---
 
+
+---
+
+## 📖 API Documentation
+
+- 📄 [API Docs (`api.md`)](https://github.com/pankajshahx/omindai-call-analytics/blob/main/omindai-backend/postman/api_docs.md)
+- 🔗 [Postman Collection](http://github.com/pankajshahx/omindai-call-analytics/blob/main/omindai-backend/postman/postman_collection.json)
+
+---
+
+
 ## 🔄 Processing Flow
 
 1. **Upload audio file**
