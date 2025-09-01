@@ -19,9 +19,15 @@ This project has three main parts:
 
 ## 2. Setup
 
-1. Place the `.env` file in the **project root** (same folder as `docker-compose.yml`).
+1. Create a `.env` file in the **project root** (same folder as `docker-compose.yml`).
 
-   > ⚠️ Do not commit `.env` to git.
+   ```ini
+   PORT=5000
+   MONGODB_URI=mongodb://mongo:27017/omindai
+   OPENAI_API_KEY=your_key
+   GEMINI_API_KEY=your_key
+
+   ```
 
 2. Build & start services (frontend, backend, mongo):
 
