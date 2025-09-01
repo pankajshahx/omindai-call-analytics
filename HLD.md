@@ -4,7 +4,7 @@
 
 This is a scalable SaaS platform that enables users to upload large audio files, transcribe them using speech-to-text (STT) technology, analyze transcripts for quality metrics, and deliver actionable coaching insights through a real-time dashboard.
 
-[[🔗 Link for more detailed design (Excalidraw)](:/https/excalidraw.com/#json=IhZIC0uq86kBHFVvfk582,aFBHW5syRFnz8ql9HYkU4A)](https://excalidraw.com/#json=IhZIC0uq86kBHFVvfk582,aFBHW5syRFnz8ql9HYkU4A)
+[[🔗 Link for more detailed design (Excalidrawhttp)]](https://excalidraw.com/#json=YcpfvEpCoJ5ugKvR3oIeb,b6LItCrzkL0NRJRvKi6s1g)
 
 <img width="10495" height="3850" alt="Image" src="https://github.com/user-attachments/assets/28324ffd-714b-4927-b439-30fdcd9ddf62" />  
 
